@@ -22,8 +22,7 @@ A modular ROS2-based simulation system for coordinating multiple robot agents to
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/M-RPOS.git
-cd M-RPOS
+git clone https://github.com/sdimitriadis8/m_rpoas.git
 
 # Build workspace
 colcon build --symlink-install
