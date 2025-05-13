@@ -1,24 +1,33 @@
 from launch import LaunchDescription
 from launch.actions import ExecuteProcess
+from ament_index_python.packages import get_package_share_directory
+from launch.actions import DeclareLaunchArgument
+from launch_ros.actions import Node
 import os
 
 def generate_launch_description():
-    urdf_path = os.path.join(
-        os.path.dirname(__file__), '..', 'urdf', 'patrol_bot.urdf'
+    urdf_file = os.path.join(
+        get_package_share_directory('m_r_poas_core'),
+        'urdf',
+        'robot.urdf.xacro'
     )
-    urdf_path = os.path.abspath(urdf_path)
 
     return LaunchDescription([
-        ExecuteProcess(
-            cmd=['gz', 'sim', '-v4', 'empty.sdf'],
-            output='screen'
+        Node(
+            package='robot_state_publisher',
+            executable='robot_state_publisher',
+            name='robot_state_publisher',
+            parameters=[{'robot_description': open(urdf_file).read()}]
         ),
-        ExecuteProcess(
-            cmd=[
-                'ros2', 'run', 'ros_gz_sim', 'create',
-                '-name', 'patrol_bot',
-                '-file', urdf_path
-            ],
+        Node(
+            package='joint_state_publisher',
+            executable='joint_state_publisher',
+            name='joint_state_publisher'
+        ),
+        Node(
+            package='rviz2',
+            executable='rviz2',
+            name='rviz2',
             output='screen'
         )
     ])
