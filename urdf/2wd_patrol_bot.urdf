@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--Initialise our robot structure with its name-->
-<robot name="patrol_bot">
+<robot name="2wd_patrol_bot">
 
   <!--Different colours setups with codes-->
   <material name="bluelike">
@@ -34,16 +34,16 @@
     <!--Visual of the robot to create its geometry, colour, origin, etc-->
     <visual>
       <geometry>
-        <box size="0.5 0.2 0.1" />
+        <box size="0.6 0.4 0.2" />
       </geometry>
       <material name="orange" />
-      <origin xyz="0 0 0.05" rpy="0 0 0" />
+      <origin xyz="0 0 0.1" rpy="0 0 0" /> <!--Set the origin to be half its height so it can sit on the ground-->
     </visual>
 
     <!--Collision geometry-->
     <collision>
       <geometry>
-        <box size="0.5 0.2 0.1" />
+        <box size="0.6 0.4 0.2" />
       </geometry>
     </collision>
 
@@ -54,78 +54,40 @@
     </inertial>
   </link>
 
-  <!--Making the rear wheels for the robot-->
-  <link name="left_r_wheel">
+  <!--Empty link for the robot footprint-->
+  <link name ="base_footprint"/>
+
+  <!--Making the wheels for the robot-->
+  <link name="left_wheel">
     <visual>
       <geometry>
-        <cylinder radius="0.05" length="0.05" />
+        <cylinder radius="0.1" length="0.05" />
       </geometry>
       <material name="cypressgreen" />
       <origin xyz="0 0 0" rpy="1.570 0 0" />
     </visual>
   </link>
 
-  <link name="right_r_wheel">
+  <link name="right_wheel">
     <visual>
       <geometry>
-        <cylinder radius="0.05" length="0.05" />
+        <cylinder radius="0.1" length="0.05" />
       </geometry>
       <material name="cypressgreen" />
-      <origin xyz="0 0 -0" rpy="1.570 0 0" />
-    </visual>
-  </link>
-
-  <!--Making the front wheels for the robot-->
-  <link name="left_f_wheel">
-    <visual>
-      <geometry>
-        <cylinder radius="0.05" length="0.05" />
-      </geometry>
-      <material name="blue" />
       <origin xyz="0 0 0" rpy="1.570 0 0" />
     </visual>
   </link>
 
-  <link name="right_f_wheel">
+  <!--Making the caster wheel (sphere) for the robot to stand-->
+  <link name="caster_wheel">
     <visual>
       <geometry>
-        <cylinder radius="0.05" length="0.05" />
+        <sphere radius="0.05" />
       </geometry>
       <material name="blue" />
-      <origin xyz="0 0 0" rpy="1.570 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
     </visual>
   </link>
-
-  <!--We need joints for parent-child relationship of links-->
-  <joint name="left_r_wheel_joint" type="continuous"> <!-- Type is continuous for 360 revolution -->
-    <parent link="base_link" />
-    <child link="left_r_wheel" />
-    <origin xyz="-0.15 -0.125 0" rpy="0 0 0" /> <!--About
-    a quarter of the robot's length for wheel position on x, half its width plus half the width of
-    the wheel to be on the edge of it on y-->
-    <axis xyz="0 1 0" /> <!-- Axis required for rotation -->
-  </joint>
-
-  <joint name="right_r_wheel_joint" type="continuous">
-    <parent link="base_link" />
-    <child link="right_r_wheel" />
-    <origin xyz="-0.15 0.125 0" rpy="0 0 0" />
-    <axis xyz="0 1 0" />
-  </joint>
-
-  <joint name="left_f_wheel_joint" type="continuous">
-    <parent link="base_link" />
-    <child link="left_f_wheel" />
-    <origin xyz="0.15 -0.125 0" rpy="0 0 0" />
-    <axis xyz="0 1 0" />
-  </joint>
-
-  <joint name="right_f _wheel_joint" type="continuous">
-    <parent link="base_link" />
-    <child link="right_f_wheel" />
-    <origin xyz="0.15 0.125 0" rpy="0 0 0" />
-    <axis xyz="0 1 0" />
-  </joint>
 
   <!-- Add element on-board stereoscopic camera etc -->
   <link name="addon_base">
@@ -138,10 +100,40 @@
     </visual>
   </link>
 
+  <!--We need joints for parent-child relationship of links-->
+
+  <joint name="base_joint" type="fixed">
+    <parent link="base_footprint" />
+    <child link="base_link" />
+    <origin xyz="0 0 0.1" rpy="0 0 0" />
+  </joint>
+
+  <joint name="left_wheel_joint" type="continuous"> <!-- Type is continuous for 360 revolution -->
+    <parent link="base_link" />
+    <child link="left_wheel" />
+    <origin xyz="-0.15 -0.225 0" rpy="0 0 0" /> <!--About
+    a quarter of the robot's length for wheel position on x, half its width plus half the width of
+    the wheel to be on the edge of it on y-->
+    <axis xyz="0 1 0" /> <!-- Axis required for rotation -->
+  </joint>
+
+  <joint name="right_wheel_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="right_wheel" />
+    <origin xyz="-0.15 0.225 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <joint name="caster_wheel_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="caster_wheel" />
+    <origin xyz="0.15 0 -0.05" rpy="0 0 0" />
+  </joint>
+
   <joint name="addon_base_joint" type="revolute"> <!-- Type revolute needs limits to work (see below) -->
     <parent link="base_link" />
     <child link="addon_base" />
-    <origin xyz="0 0 0.1" rpy="0 0 0" />
+    <origin xyz="0 0 0.2" rpy="0 0 0" />
     <axis xyz="0 0 1" /> <!-- Axis required for rotation -->
     <limit lower="-1.57" upper="1.57" velocity="10" effort="10" />
   </joint>
