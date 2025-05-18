@@ -54,6 +54,9 @@
     </inertial>
   </link>
 
+  <!--Empty link for the robot footprint-->
+  <link name ="base_footprint"/>
+
   <!--Making the rear wheels for the robot-->
   <link name="left_r_wheel">
     <visual>
@@ -97,6 +100,13 @@
   </link>
 
   <!--We need joints for parent-child relationship of links-->
+
+  <joint name="base_joint" type="fixed">
+    <parent link="base_footprint" />
+    <child link="base_link" />
+    <origin xyz="0 0 0.05" rpy="0 0 0" />
+  </joint>
+
   <joint name="left_r_wheel_joint" type="continuous"> <!-- Type is continuous for 360 revolution -->
     <parent link="base_link" />
     <child link="left_r_wheel" />
