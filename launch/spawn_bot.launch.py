@@ -7,9 +7,9 @@ import os
 
 def generate_launch_description():
     urdf_file = os.path.join(
-        get_package_share_directory('m_r_poas_core'),
+        get_package_share_directory('mrpoas_core'),
         'urdf',
-        'robot.urdf.xacro'
+        '4wd_patrol_bot.urdf'
     )
 
     return LaunchDescription([

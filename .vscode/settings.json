@@ -1,11 +1,11 @@
 {
     "python.autoComplete.extraPaths": [
-        "/home/sokratis/ros2_ws/install/m_r_poas_core/lib/python3.10/site-packages",
+        "/home/sokratis/ros2_ws/install/mrpoas_core/lib/python3.10/site-packages",
         "/opt/ros/humble/lib/python3.10/site-packages",
         "/opt/ros/humble/local/lib/python3.10/dist-packages"
     ],
     "python.analysis.extraPaths": [
-        "/home/sokratis/ros2_ws/install/m_r_poas_core/lib/python3.10/site-packages",
+        "/home/sokratis/ros2_ws/install/mrpoas_core/lib/python3.10/site-packages",
         "/opt/ros/humble/lib/python3.10/site-packages",
         "/opt/ros/humble/local/lib/python3.10/dist-packages"
     ]

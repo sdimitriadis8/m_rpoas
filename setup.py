@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 import os
 from glob import glob
 
-package_name = 'm_r_poas_core'
+package_name = 'mrpoas_core'
 
 setup(
     name=package_name,
@@ -10,10 +10,10 @@ setup(
     packages=find_packages(exclude=['test']),
     data_files=[
     ('share/ament_index/resource_index/packages',
-        ['resource/m_r_poas_core']),
-    ('share/m_r_poas_core', ['package.xml']),
-    ('share/m_r_poas_core/launch', ['launch/spawn_bot.launch.py']),
-    ('share/m_r_poas_core/urdf', ['urdf/robot.urdf.xacro']),
+        ['resource/mrpoas_core']),
+    ('share/mrpoas_core', ['package.xml']),
+    ('share/mrpoas_core/launch', ['launch/spawn_bot.launch.py']),
+    ('share/mrpoas_core/urdf', ['urdf/2wd_patrol_bot.urdf','urdf/4wd_patrol_bot.urdf']),
 ],
     install_requires=['setuptools'],
     zip_safe=True,

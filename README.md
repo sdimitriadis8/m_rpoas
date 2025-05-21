@@ -1,4 +1,4 @@
-# 🤖 Multi-Robot Patrol & Obstacle Avoidance System (M-RPOS)
+# 🤖 Multi-Robot Patrol & Obstacle Avoidance System (M-RPOAS)
 
 A modular ROS2-based simulation system for coordinating multiple robot agents to patrol an area and avoid obstacles. Supports Gazebo (gz sim) and keyboard control input.
 
@@ -31,4 +31,4 @@ colcon build --symlink-install
 source install/setup.bash
 
 # Launch simulation
-ros2 launch launch/m_rpos.launch.py
+ros2 launch launch/spawn_bot.launch.py
