@@ -1,3 +1,10 @@
+<!--
+  4WD Patrol Robot URDF Model
+  Author: Sokratis Dimitriadis
+  Description: Simplified URDF of 4-wheeled mobile robot for testing in simulation (RViz or Gazebo).
+  Version: 0.2
+-->
+
 <?xml version="1.0"?>
 <!--Initialise our robot structure with its name-->
 <robot name="4wd_patrol_bot">
@@ -28,6 +35,7 @@
   </material>
 
 
+  <!--LINKS-->
   <!--Base link of the robot-First rigid part to start from-->
   <link name="base_link">
 
@@ -57,8 +65,9 @@
   <!--Empty link for the robot footprint-->
   <link name ="base_footprint"/>
 
+  <!-- WHEELS -->
   <!--Making the rear wheels for the robot-->
-  <link name="left_r_wheel">
+  <link name="rear_l_wheel">
     <visual>
       <geometry>
         <cylinder radius="0.05" length="0.05" />
@@ -68,7 +77,7 @@
     </visual>
   </link>
 
-  <link name="right_r_wheel">
+  <link name="rear_r_wheel">
     <visual>
       <geometry>
         <cylinder radius="0.05" length="0.05" />
@@ -79,7 +88,7 @@
   </link>
 
   <!--Making the front wheels for the robot-->
-  <link name="left_f_wheel">
+  <link name="front_l_wheel">
     <visual>
       <geometry>
         <cylinder radius="0.05" length="0.05" />
@@ -89,7 +98,7 @@
     </visual>
   </link>
 
-  <link name="right_f_wheel">
+  <link name="front_r_wheel">
     <visual>
       <geometry>
         <cylinder radius="0.05" length="0.05" />
@@ -107,32 +116,32 @@
     <origin xyz="0 0 0.05" rpy="0 0 0" />
   </joint>
 
-  <joint name="left_r_wheel_joint" type="continuous"> <!-- Type is continuous for 360 revolution -->
+  <joint name="rear_l_wheel_joint" type="continuous"> <!-- Type is continuous for 360 revolution -->
     <parent link="base_link" />
-    <child link="left_r_wheel" />
+    <child link="rear_l_wheel" />
     <origin xyz="-0.15 -0.125 0" rpy="0 0 0" /> <!--About
     a quarter of the robot's length for wheel position on x, half its width plus half the width of
     the wheel to be on the edge of it on y-->
     <axis xyz="0 1 0" /> <!-- Axis required for rotation -->
   </joint>
 
-  <joint name="right_r_wheel_joint" type="continuous">
+  <joint name="rear_r_wheel_joint" type="continuous">
     <parent link="base_link" />
-    <child link="right_r_wheel" />
+    <child link="rear_r_wheel" />
     <origin xyz="-0.15 0.125 0" rpy="0 0 0" />
     <axis xyz="0 1 0" />
   </joint>
 
-  <joint name="left_f_wheel_joint" type="continuous">
+  <joint name="front_l_wheel_joint" type="continuous">
     <parent link="base_link" />
-    <child link="left_f_wheel" />
+    <child link="front_l_wheel" />
     <origin xyz="0.15 -0.125 0" rpy="0 0 0" />
     <axis xyz="0 1 0" />
   </joint>
 
-  <joint name="right_f _wheel_joint" type="continuous">
+  <joint name="front_r_wheel_joint" type="continuous">
     <parent link="base_link" />
-    <child link="right_f_wheel" />
+    <child link="front_r_wheel" />
     <origin xyz="0.15 0.125 0" rpy="0 0 0" />
     <axis xyz="0 1 0" />
   </joint>
@@ -156,5 +165,66 @@
     <limit lower="-1.57" upper="1.57" velocity="10" effort="10" />
   </joint>
 
+  <!-- TRANSMISSIONS -->
+  <!--Rear wheels transmissions--> 
+  <transmission name="rear_l_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="rear_l_wheel_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="rear_l_motor">
+      <mechanicalReduction>1.0</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="rear_r_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="rear_r_wheel_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="rear_r_motor">
+      <mechanicalReduction>1.0</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <!--Front wheels transmissions--> 
+  <transmission name="front_l_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="front_l_wheel_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="front_l_motor">
+      <mechanicalReduction>1.0</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="front_r_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="front_r_wheel_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="front_r_motor">
+      <mechanicalReduction>1.0</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  
+
+  <!-- GAZEBO PLUGIN -->
+  <gazebo>
+    <plugin name="diff_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <left_wheel>front_left_wheel_joint rear_left_wheel_joint</left_wheel>
+      <right_wheel>front_right_wheel_joint rear_right_wheel_joint</right_wheel>
+      <wheel_separation>0.3</wheel_separation>
+      <wheel_radius>0.05</wheel_radius>
+      <updateRate>50.0</updateRate>
+      <commandTopic>/cmd_vel</commandTopic>
+      <odometryTopic>/odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <robotBaseFrame>base_link</robotBaseFrame>
+      <publishOdom>true</publishOdom>
+      <publishWheelTF>true</publishWheelTF>
+    </plugin>
+  </gazebo>
 
 </robot>

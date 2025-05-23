@@ -1,3 +1,10 @@
+<!--
+  2WD Patrol Robot URDF Model
+  Author: Sokratis Dimitriadis
+  Description: Simplified URDF of 2-wheeled mobile robot for testing in simulation (RViz or Gazebo).
+  Version: 0.2
+-->
+
 <?xml version="1.0"?>
 <!--Initialise our robot structure with its name-->
 <robot name="2wd_patrol_bot">
@@ -28,6 +35,7 @@
   </material>
 
 
+  <!--LINKS-->
   <!--Base link of the robot-First rigid part to start from-->
   <link name="base_link">
 
@@ -49,14 +57,17 @@
 
     <!--Inertia description-->
     <inertial>
-      <mass value="1.0" />
-      <inertia ixx="0.1" iyy="0.1" izz="0.1" ixy="0.0" ixz="0.0" iyz="0.0" />
+      <mass value="6.0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.04" iyy="0.04" izz="0.04" ixy="0.0" ixz="0.0" iyz="0.0"/>
     </inertial>
+
   </link>
 
   <!--Empty link for the robot footprint-->
   <link name ="base_footprint"/>
 
+  <!-- WHEELS -->
   <!--Making the wheels for the robot-->
   <link name="left_wheel">
     <visual>
@@ -101,7 +112,7 @@
   </link>
 
   <!--We need joints for parent-child relationship of links-->
-
+  <!--JOINTS-->
   <joint name="base_joint" type="fixed">
     <parent link="base_footprint" />
     <child link="base_link" />
@@ -137,6 +148,43 @@
     <axis xyz="0 0 1" /> <!-- Axis required for rotation -->
     <limit lower="-1.57" upper="1.57" velocity="10" effort="10" />
   </joint>
+
+  <!-- TRANSMISSIONS -->
+  <transmission name="left_wheel_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_wheel_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="left_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="right_wheel_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_wheel_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="right_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <!-- GAZEBO PLUGIN -->
+  <gazebo>
+    <plugin name="diff_drive" filename="libgazebo_ros_diff_drive.so">
+      <left_wheel>left_wheel_joint</left_wheel>
+      <right_wheel>right_wheel_joint</right_wheel>
+      <updateRate>50</updateRate>
+      <robotBaseFrame>base_link</robotBaseFrame>
+      <publishWheelTF>true</publishWheelTF>
+      <publishTf>1</publishTf>
+      <publishOdom>true</publishOdom>
+      <odometryFrame>odom</odometryFrame>
+      <commandTopic>/cmd_vel</commandTopic>
+      <odometryTopic>/odom</odometryTopic>
+    </plugin>
+  </gazebo>
 
 
 </robot>

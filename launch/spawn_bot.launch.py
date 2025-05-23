@@ -14,6 +14,7 @@ import os
 
 
 def generate_launch_description():
+    
     # Get the absolute path to the robot URDF file
     urdf_file = os.path.join(
         get_package_share_directory("mrpoas_core"), "urdf", "4wd_patrol_bot.urdf"

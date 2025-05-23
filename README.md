@@ -1,34 +1,34 @@
-# 🤖 Multi-Robot Patrol & Obstacle Avoidance System (M-RPOAS)
+# 🛰️ M-RPOAS: Multi-Robot Patrol & Obstacle Avoidance System
 
-A modular ROS2-based simulation system for coordinating multiple robot agents to patrol an area and avoid obstacles. Supports Gazebo (gz sim) and keyboard control input.
+A ROS 2-based simulation project that models differential-drive robot patrols with basic obstacle avoidance. Built using **ROS 2 Humble**, **Gazebo**, **URDF**, and **Docker** for reproducibility.
 
-## 🔧 Features
+> 🔧 Currently supports:  
+> - 2WD and 4WD patrol robot models  
+> - RViz + robot_state_publisher launch  
+> - ROS 2 + Gazebo integration in progress
 
-- Differential drive robots with obstacle sensors
-- Multi-robot coordination with patrol zones
-- Gazebo simulation + ROS2 nodes
-- Keyboard teleoperation and velocity command bridges
-- Docker support for reproducible environments
+---
 
-## 🧰 Tech Stack
+## 🚀 Quick Start (ROS 2)
 
-- ROS2 (Humble or Jazzy)
-- Gazebo Sim (Ignition/GZ)
-- Python (for control nodes)
-- URDF/Xacro for robot models
-- Docker (optional)
+### 🔧 Requirements
 
-## 🚀 Quick Start
+- Ubuntu 22.04
+- [ROS 2 Humble](https://docs.ros.org/en/humble/Installation.html)
+- `colcon`, `rosdep`, `gazebo`, and `rviz2`
+
+### 📦 Build the workspace
 
 ```bash
 # Clone the repository
-git clone https://github.com/sdimitriadis8/m_rpoas.git
+git clone https://github.com/sdimitriadis8/mrpoas.git
 
 # Build workspace
+cd ~/ros2_ws
 colcon build --symlink-install
 
 # Source environment
 source install/setup.bash
 
 # Launch simulation
-ros2 launch launch/spawn_bot.launch.py
+ros2 launch mrpoas spawn_bot.launch.py
