@@ -1,11 +1,11 @@
+<?xml version="1.0"?>
 <!--
   2WD Patrol Robot URDF Model
   Author: Sokratis Dimitriadis
   Description: Simplified URDF of 2-wheeled mobile robot for testing in simulation (RViz or Gazebo).
   Version: 0.2
 -->
-
-<?xml version="1.0"?>
+  
 <!--Initialise our robot structure with its name-->
 <robot name="2wd_patrol_bot">
 

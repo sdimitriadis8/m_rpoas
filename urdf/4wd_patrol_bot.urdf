@@ -1,11 +1,11 @@
+<?xml version="1.0"?>
 <!--
   4WD Patrol Robot URDF Model
   Author: Sokratis Dimitriadis
   Description: Simplified URDF of 4-wheeled mobile robot for testing in simulation (RViz or Gazebo).
   Version: 0.2
 -->
-
-<?xml version="1.0"?>
+  
 <!--Initialise our robot structure with its name-->
 <robot name="4wd_patrol_bot">
 
@@ -213,8 +213,10 @@
   <!-- GAZEBO PLUGIN -->
   <gazebo>
     <plugin name="diff_drive_controller" filename="libgazebo_ros_diff_drive.so">
-      <left_wheel>front_left_wheel_joint rear_left_wheel_joint</left_wheel>
-      <right_wheel>front_right_wheel_joint rear_right_wheel_joint</right_wheel>
+      <frontleftjoint>front_l_wheel_joint</frontleftjoint>
+      <frontrighttjoint>front_r_wheel_joint</frontrighttjoint>
+      <rearleftjoint>rear_l_wheel_joint</rearleftjoint>
+      <rearrighttjoint>rear_r_wheel_joint</rearrighttjoint>
       <wheel_separation>0.3</wheel_separation>
       <wheel_radius>0.05</wheel_radius>
       <updateRate>50.0</updateRate>
